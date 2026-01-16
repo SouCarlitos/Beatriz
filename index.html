@@ -13,7 +13,7 @@
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
 }
 
-/* FUNDO (corrigido pra não “cortar” embaixo) */
+/* FUNDO (sem “faixa” estranha embaixo) */
 html, body{ min-height:100%; }
 
 body{
@@ -80,6 +80,7 @@ body{
   width:100%;
   height:100%;
   object-fit:cover;
+  display:block;
 }
 
 /* INFO */
@@ -124,7 +125,7 @@ body{
   border-radius:2px;
 }
 
-/* CONTROLES */
+/* CONTROLES (estrutura travada) */
 .controls{
   width:100%;
   position:relative;
@@ -138,10 +139,12 @@ body{
 .controls .side{
   display:flex;
   align-items:center;
+  gap:34px;
+  min-width:110px;
 }
 
-.controls .side.left  { gap:34px; }
-.controls .side.right { gap:34px; }
+.controls .side.left{ justify-content:flex-start; }
+.controls .side.right{ justify-content:flex-end; }
 
 .ctrl{
   width:36px;
@@ -159,6 +162,14 @@ body{
   height:22px;
   display:block;
   fill:currentColor;
+}
+
+/* ✅ Shuffle como IMG (o seu Shuffle 2v) — nunca entorta */
+.shuffle-img{
+  width:22px;
+  height:22px;
+  display:block;
+  object-fit:contain;
 }
 
 /* Botão central (Play/Pause) */
@@ -184,9 +195,6 @@ body{
   display:block;
   fill:currentColor;
 }
-
-.controls .side.left  .ctrl:first-child svg{ transform: translateY(1px); }
-.controls .side.right .ctrl:last-child  svg{ transform: translateY(1px); }
 
 /* SOBRE O CASAL */
 .couple-card{
@@ -233,7 +241,6 @@ body{
   margin-bottom:14px;
 }
 
-/* Primeira linha: anos/meses/dias */
 .stats{
   display:grid;
   grid-template-columns:repeat(3, 1fr);
@@ -260,15 +267,11 @@ body{
   color:#b3b3b3;
 }
 
-/* Segunda linha: horas totais (centralizado) */
 .hours-row{
   display:grid;
   grid-template-columns:1fr;
 }
-
-.hours-row .stat .num{
-  font-size:28px;
-}
+.hours-row .stat .num{ font-size:28px; }
 </style>
 </head>
 
@@ -294,7 +297,7 @@ body{
   </div>
 
   <div class="cover">
-    <img src="img/capa.jpg" alt="Capa">
+    <img src="img/capa.jpg" alt="Capa" loading="lazy" decoding="async">
   </div>
 
   <div class="info">
@@ -312,23 +315,20 @@ body{
     </div>
   </div>
 
-  <!-- CONTROLES -->
+  <!-- CONTROLES (ordem fixa) -->
   <div class="controls">
 
     <div class="side left">
-      <!-- SHUFFLE -->
+      <!-- SHUFFLE (SEU ARQUIVO) -->
       <div class="ctrl" aria-label="Aleatório">
-        <svg width="59" height="49" viewBox="0 0 59 49" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M47.0453 41.2934C47.1502 41.2934 47.2457 41.348 47.2838 41.4478C47.3315 41.5385 47.3035 41.6474 47.2272 41.72C46.4351 42.4732 44.8505 43.9795 44.8505 43.9795C43.7626 45.0139 43.7626 46.6925 44.8505 47.7269C45.9383 48.7614 47.6945 48.7614 48.7823 47.7269C48.7823 47.7269 56.0058 40.8671 57.9239 39.0341C58.0479 38.9162 58.1147 38.7528 58.1147 38.5895C58.1147 38.4262 58.0479 38.2628 57.9239 38.1448C56.0058 36.3119 48.7823 29.4519 48.7823 29.4519C47.6945 28.4174 45.9383 28.4174 44.8505 29.4519C43.7626 30.4863 43.7626 32.1651 44.8505 33.1995C44.8505 33.1995 46.5206 34.7874 47.3412 35.5678C47.4176 35.6404 47.4464 35.7493 47.3986 35.84C47.3605 35.9398 47.265 35.9944 47.1601 35.9944C45.7096 35.9944 42.3127 35.9851 42.3127 35.9851C41.034 35.9851 39.7547 35.3953 38.4092 34.5333C36.701 33.4263 34.974 31.8657 33.2181 30.0509C33.2181 30.0509 32.1877 28.9892 31.6533 28.4357C31.5674 28.3449 31.4529 28.2905 31.3193 28.2905C31.1952 28.2814 31.0712 28.3267 30.9853 28.4084C30.2123 29.0889 28.3609 30.7041 27.5879 31.3847C27.4925 31.4664 27.4351 31.5753 27.4351 31.6933C27.4256 31.8112 27.4737 31.9291 27.5596 32.0199C28.094 32.5734 29.1245 33.6351 29.1245 33.6351C33.6 38.2538 38.1615 41.2753 42.303 41.2753C42.303 41.2753 45.6234 41.2844 47.0453 41.2934Z" fill="currentColor"/>
-        </svg>
+        <!-- Espaço no nome = %20 -->
+        <img class="shuffle-img" src="img/Shuffle%202v.svg" alt="Aleatório">
       </div>
 
-      <!-- VOLTAR -->
+      <!-- ANTERIOR -->
       <div class="ctrl" aria-label="Anterior">
-        <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M10.2673 27.9109L10.2673 46.4723C10.2673 47.391 9.55304 48.1374 8.57095 48.1374L1.60705 48.1374C0.714245 48.1374 6.52542e-08 47.391 1.45569e-07 46.4723L4.06282e-06 1.66417C4.14314e-06 0.745472 0.714249 1.11142e-05 1.60706 1.11923e-05L8.57096 1.18011e-05C9.55304 1.1887e-05 10.2673 0.745472 10.2673 1.66417L10.2673 20.2257L44.194 0.629425C44.9975 0.167843 45.9796 0.167843 46.7831 0.629425C47.5866 1.09101 48.1223 1.9436 48.1223 2.86676C48.1223 12.5876 48.1223 35.5488 48.1223 45.2706C48.1223 46.1929 47.5866 47.0455 46.7831 47.5071C45.9796 47.9687 44.9975 47.9687 44.194 47.508L10.2673 27.9109Z"
-                fill="currentColor"/>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 5h2v14H6V5zm3 7 11-7v14L9 12z"/>
         </svg>
       </div>
     </div>
@@ -337,21 +337,18 @@ body{
     <div class="play" id="playBtn" aria-label="Play/Pause" title="Play/Pause"></div>
 
     <div class="side right">
-      <!-- IR -->
+      <!-- PRÓXIMA -->
       <div class="ctrl" aria-label="Próxima">
-        <svg width="49" height="49" viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M37.855 20.2265V1.66512C37.855 0.746421 38.5693 0 39.5514 0H46.5153C47.4081 0 48.1223 0.746421 48.1223 1.66512V46.4733C48.1223 47.392 47.4081 48.1374 46.5153 48.1374H39.5514C38.5693 48.1374 37.855 47.392 37.855 46.4733V27.9118L3.92835 47.508C3.12483 47.9696 2.14274 47.9696 1.33921 47.508C0.535685 47.0464 0 46.1939 0 45.2707C0 35.5498 0 12.5886 0 2.86683C0 1.94456 0.535685 1.09195 1.33921 0.63037C2.14274 0.168789 3.12483 0.168723 3.92835 0.629411L37.855 20.2265Z"
-                fill="currentColor"/>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M16 5h2v14h-2V5zM4 19V5l11 7-11 7z"/>
         </svg>
       </div>
 
       <!-- REPETIR -->
       <div class="ctrl" aria-label="Repetir">
-        <svg width="57" height="52" viewBox="0 0 57 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M31.6436 38.7823L34.7263 35.8423C35.8142 34.8078 35.8142 33.1383 34.7263 32.1039C33.648 31.0694 31.8823 31.0694 30.7944 32.1039L21.1847 41.2413L30.7944 50.3789C31.8823 51.4043 33.648 51.4043 34.7263 50.3789C35.8142 49.3445 35.8142 47.6657 34.7263 46.6313L31.6436 43.7005H42.9419C50.2611 43.7005 56.2062 38.0382 56.2062 31.0784V12.6128C56.2062 5.6531 50.2611 0 42.9419 0H13.274C5.94522 0 0 5.6531 0 12.6128V31.0784C0 38.0382 5.94522 43.7005 13.274 43.7005H15.9079V38.7823H13.274C8.79847 38.7823 5.17241 35.325 5.17241 31.0784V12.6128C5.17241 8.36622 8.79847 4.90917 13.274 4.90917H42.9419C47.4079 4.90917 51.0442 8.36622 51.0442 12.6128V31.0784C51.0442 35.325 47.4079 38.7823 42.9419 38.7823H31.6436Z"
-                fill="currentColor"/>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M17 1l4 4-4 4V6H7v4H5V4h12V1z"/>
+          <path d="M7 23l-4-4 4-4v3h10v-4h2v6H7v3z"/>
         </svg>
       </div>
     </div>
@@ -361,7 +358,7 @@ body{
   <!-- SOBRE O CASAL -->
   <section class="couple-card">
     <div class="couple-cover">
-      <img src="img/sobreocasal.jpg" alt="Juan e Beatriz">
+      <img src="img/sobreocasal.jpg" alt="Juan e Beatriz" loading="lazy" decoding="async">
       <div class="label">Sobre o casal</div>
     </div>
 
@@ -387,7 +384,7 @@ body{
 </div>
 
 <!-- ÁUDIO -->
-<audio id="audio" src="audio/SEU_ARQUIVO.mp3" preload="auto" loop></audio>
+<audio id="audio" src="audio/SEU_ARQUIVO.mp3" preload="metadata" loop></audio>
 
 <script>
 (function () {
@@ -398,7 +395,8 @@ body{
   const tCurrent = document.getElementById("tCurrent");
   const tRemaining = document.getElementById("tRemaining");
 
-  const FALLBACK_DURATION = 3 * 60 + 39; // 3:39
+  const FALLBACK_DURATION = 3 * 60 + 39; // 3:39 (se metadata não carregar)
+  tRemaining.textContent = "-3:39"; // fixo (não diminui)
 
   function fmt(sec){
     sec = Math.max(0, Math.floor(sec));
@@ -416,7 +414,6 @@ body{
       <path d="M8 5v14l11-7Z" fill="currentColor"></path>
     </svg>
   `;
-
   const PAUSE_SVG = `
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"></rect>
@@ -427,26 +424,18 @@ body{
   function setPlayIcon(){ playBtn.innerHTML = PLAY_SVG; }
   function setPauseIcon(){ playBtn.innerHTML = PAUSE_SVG; }
 
-  // você pediu o -3:xx parado:
-  tRemaining.textContent = "-3:39";
-
   function updateUI(){
     const dur = durationSafe();
     const cur = Math.min(audio.currentTime || 0, dur);
     const pct = dur > 0 ? (cur / dur) * 100 : 0;
-
     barFill.style.width = pct + "%";
     tCurrent.textContent = fmt(cur);
   }
 
   async function togglePlay(){
     if (audio.paused) {
-      try {
-        await audio.play();
-        setPauseIcon();
-      } catch(e) {
-        setPlayIcon();
-      }
+      try { await audio.play(); setPauseIcon(); }
+      catch(e){ setPlayIcon(); }
     } else {
       audio.pause();
       setPlayIcon();
@@ -465,13 +454,14 @@ body{
   audio.addEventListener("ended", () => { audio.currentTime = 0; updateUI(); });
 
   // ======= CONTADOR DO CASAL =======
-  // 27/09/2025 às 12:00 (hora do seu PC)
+  // 27/09/2025 às 12:00 (hora do PC)
   const start = new Date(2025, 8, 27, 12, 0, 0);
 
   const yearsEl = document.getElementById("years");
   const monthsEl = document.getElementById("months");
   const daysEl = document.getElementById("days");
   const hoursTotalEl = document.getElementById("hoursTotal");
+  const nf = new Intl.NumberFormat("pt-BR");
 
   function addMonths(date, m){
     const d = new Date(date);
@@ -498,7 +488,6 @@ body{
       return;
     }
 
-    // anos completos
     let years = now.getFullYear() - start.getFullYear();
     let cursor = addYears(start, years);
     if (cursor > now){
@@ -506,7 +495,6 @@ body{
       cursor = addYears(start, years);
     }
 
-    // meses completos depois dos anos
     let months = (now.getMonth() - cursor.getMonth()) + (now.getFullYear() - cursor.getFullYear()) * 12;
     let cursor2 = addMonths(cursor, months);
     if (cursor2 > now){
@@ -514,17 +502,14 @@ body{
       cursor2 = addMonths(cursor, months);
     }
 
-    // dias completos depois dos meses
     const diffMs = now - cursor2;
     const days = Math.floor(diffMs / (24*60*60*1000));
-
-    // horas totais desde o começo (NUNCA zera)
     const totalHours = Math.floor((now - start) / (1000*60*60));
 
     yearsEl.textContent = years;
     monthsEl.textContent = months;
     daysEl.textContent = days;
-    hoursTotalEl.textContent = totalHours;
+    hoursTotalEl.textContent = nf.format(totalHours);
   }
 
   tick();
@@ -534,4 +519,3 @@ body{
 
 </body>
 </html>
-```
